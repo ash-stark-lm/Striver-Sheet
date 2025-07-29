@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+#define fo(i, n) for (int i = 0; i < n; i++)
+#define inputarr(arr, n)                                                       \
+  for (int i = 0; i < n; i++)                                                  \
+    cin >> arr[i];
+#define endl "\n"
+#define pb push_back
+#define YES cout << "YES" << endl
+#define NO cout << "NO" << endl
+#define vi(n)                                                                  \
+  vector<int> v(n);                                                            \
+  inputarr(v, n);
+
+void dfs(int node, vector<int> &vis, vector<vector<int>> &adj,
+         vector<int> &ans) {
+  vis[node] = 1;
+  ans.pb(node);
+  for (auto &it : adj[node]) {
+    if (!vis[it]) {
+      dfs(it, vis, adj, ans);
+    }
+  }
+}
+
+signed main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+  cout.tie(NULL);
+
+  int V = 5; // Number of nodes
+  vector<vector<int>> adj(V);
+
+  // Undirected graph edges
+  vector<pair<int, int>> edges = {{0, 1}, {0, 4}, {1, 2}, {2, 4}, {2, 3}};
+  // 0 based
+
+  /*
+      0 - 1
+      |   |
+      4 - 2
+          |
+          3
+  */
+
+  for (auto [u, v] : edges) {
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+  }
+  vector<int> vis(V, 0);
+
+  // DFS implementation
+  vector<int> ans;
+  dfs(0, vis, adj, ans);
+  for (auto &x : ans) {
+    cout << x << " ";
+  }
+  cout << endl;
+
+  return 0;
+}
